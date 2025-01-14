@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Mud
+  - Grass
+  - Metal
+  - Sand
+  - Stone
+  - Wood
   layers:
   - Default
   - TransparentFX
