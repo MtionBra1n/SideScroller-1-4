@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
     private InputAction attackAction;
     private InputAction rollAction;
     private InputAction interactAction;
+    private InputAction runAction;
     #endregion
     
     #endregion
@@ -78,6 +81,7 @@ public class PlayerController : MonoBehaviour
         moveAction = inputActions.Player.Move;
         jumpAction = inputActions.Player.Jump;
         rollAction = inputActions.Player.Roll;
+        runAction = inputActions.Player.Run;
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -95,6 +99,9 @@ public class PlayerController : MonoBehaviour
         jumpAction.performed += Jump;
 
         rollAction.performed += Roll;
+
+        runAction.performed += Run;
+        runAction.canceled += Run;
 
     }
 
@@ -130,6 +137,9 @@ public class PlayerController : MonoBehaviour
         jumpAction.performed -= Jump;
         
         rollAction.performed -= Roll;
+        
+        runAction.performed -= Run;
+        runAction.canceled -= Run;
 
     }
     #endregion
@@ -190,6 +200,11 @@ public class PlayerController : MonoBehaviour
             
             AnimAction(1);
         }
+    }
+    
+    private void Run(InputAction.CallbackContext ctx)
+    {
+        movementSpeed = ctx.performed ? runSpeed : walkSpeed;
     }
     
     #endregion

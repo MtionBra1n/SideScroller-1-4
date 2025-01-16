@@ -73,6 +73,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""630dc811-5d16-470f-b9e6-09f9f3e1591f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -282,6 +291,28 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76feadab-962c-4843-9cf2-4c66ef99b846"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e53e01b-b489-41f3-b8ee-8e26d761f537"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -742,6 +773,7 @@ namespace UnityEngine.InputSystem
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
+            m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -826,6 +858,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Roll;
+        private readonly InputAction m_Player_Run;
         public struct PlayerActions
         {
             private @GameInput m_Wrapper;
@@ -835,6 +868,7 @@ namespace UnityEngine.InputSystem
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
+            public InputAction @Run => m_Wrapper.m_Player_Run;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -859,6 +893,9 @@ namespace UnityEngine.InputSystem
                 @Roll.started += instance.OnRoll;
                 @Roll.performed += instance.OnRoll;
                 @Roll.canceled += instance.OnRoll;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -878,6 +915,9 @@ namespace UnityEngine.InputSystem
                 @Roll.started -= instance.OnRoll;
                 @Roll.performed -= instance.OnRoll;
                 @Roll.canceled -= instance.OnRoll;
+                @Run.started -= instance.OnRun;
+                @Run.performed -= instance.OnRun;
+                @Run.canceled -= instance.OnRun;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1038,6 +1078,7 @@ namespace UnityEngine.InputSystem
             void OnFire(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnRoll(InputAction.CallbackContext context);
+            void OnRun(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
