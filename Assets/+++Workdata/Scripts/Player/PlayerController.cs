@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
 
     private int jumpCount;
     private int rollCount;
+    
+    private Interactable selectedInteractable;
+    
     #region Input Variables
     
     public GameInput inputActions;
@@ -91,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Enable();
+        EnableInput();
 
         moveAction.performed += Move;
         moveAction.canceled += Move;
@@ -129,8 +132,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        inputActions.Disable();
-        
+        DisableInput();
         moveAction.performed -= Move;
         moveAction.canceled -= Move;
         
@@ -146,6 +148,16 @@ public class PlayerController : MonoBehaviour
     
     #region Input Methods
 
+    public void EnableInput()
+    {
+        inputActions.Enable();
+    }
+
+    public void DisableInput()
+    {
+        inputActions.Disable();
+    }
+    
     private void Move(InputAction.CallbackContext ctx)
     {
         moveInput = ctx.ReadValue<Vector2>();
@@ -224,6 +236,56 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && rollCount > 0)
         {
             rollCount = 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        TrySelectInteractable(other);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        TryDeselectInteractable(other);
+    }
+
+    #endregion
+    
+    #region Interaction
+
+    private void Interact(InputAction.CallbackContext ctx)
+    {
+        if (selectedInteractable != null)
+        {
+            selectedInteractable.Interact();
+        }
+    }
+
+    private void TrySelectInteractable(Collider2D other)
+    {
+        Interactable interactable = other.GetComponent<Interactable>();
+
+        if (interactable == null) return;
+
+        if (selectedInteractable != null)
+        {
+            selectedInteractable.Deselect();
+        }
+
+        selectedInteractable = interactable;
+        selectedInteractable.Select();
+    }
+
+    private void TryDeselectInteractable(Collider2D other)
+    {
+        Interactable interactable = other.GetComponent<Interactable>();
+
+        if (interactable == null) return;
+
+        if (interactable == selectedInteractable)
+        {
+            selectedInteractable.Deselect();
+            selectedInteractable = null;
         }
     }
     
