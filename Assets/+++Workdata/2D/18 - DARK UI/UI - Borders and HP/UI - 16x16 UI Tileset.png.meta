@@ -243,6 +243,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI - 16x16 UI Tileset_7
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 132
+        width: 42
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87e81ff0deeecc643aa8b83d4861ff44
+      internalID: -299558738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI - 16x16 UI Tileset_8
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 133
+        width: 42
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6775c7692213a1c4ead90876c68acfe7
+      internalID: 1595148790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -261,6 +303,8 @@ TextureImporter:
       UI - 16x16 UI Tileset_4: -1640032440
       UI - 16x16 UI Tileset_5: -14169491
       UI - 16x16 UI Tileset_6: -1788988734
+      UI - 16x16 UI Tileset_7: -299558738
+      UI - 16x16 UI Tileset_8: 1595148790
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

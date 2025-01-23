@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public static readonly int Hash_JumpTrigger = Animator.StringToHash("isJumping");
     public static readonly int Hash_ActionTriggerValue = Animator.StringToHash("ActionTrigger");
     public static readonly int Hash_ActionIdValue = Animator.StringToHash("ActionId");
+    public static readonly int Hash_onDeath = Animator.StringToHash("onDeath");
+
     
     #region Inspector
 
@@ -55,8 +57,6 @@ public class PlayerController : MonoBehaviour
     private int jumpCount;
     private int rollCount;
     
-
-    
     #region Input Variables
     
     public GameInput inputActions;
@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         rollAction = inputActions.Player.Roll;
         runAction = inputActions.Player.Run;
         interactAction = inputActions.Player.Interact;
+        attackAction = inputActions.Player.Fire;
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -109,6 +110,8 @@ public class PlayerController : MonoBehaviour
         runAction.canceled += Run;
 
         interactAction.performed += Interact;
+
+        attackAction.performed += Attack;
     }
 
     private void FixedUpdate()
@@ -147,6 +150,9 @@ public class PlayerController : MonoBehaviour
         runAction.canceled -= Run;
         
         interactAction.performed -= Interact;
+        
+        attackAction.performed -= Attack;
+
     }
     #endregion
     
@@ -160,6 +166,11 @@ public class PlayerController : MonoBehaviour
     public void DisableInput()
     {
         inputActions.Disable();
+    }
+
+    private void Attack(InputAction.CallbackContext ctx)
+    {
+        AnimAction(10);
     }
     
     private void Move(InputAction.CallbackContext ctx)
@@ -332,6 +343,12 @@ public class PlayerController : MonoBehaviour
         
         if(!isGrounded)
             anim.Play("player_inAir");
+    }
+
+    public void OnDeath()
+    {
+        DisableInput();
+        anim.SetTrigger(Hash_onDeath);
     }
     
     #endregion

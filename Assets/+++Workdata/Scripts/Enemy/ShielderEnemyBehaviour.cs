@@ -30,7 +30,7 @@ public class ShielderEnemyBehaviour : MonoBehaviour
     private bool isMovingRight = true;
     private float patrolBoundaryLeft;
     private float patrolBoundaryRight;
-    
+    private bool isDead;
     #endregion
 
     private void Start()
@@ -45,7 +45,7 @@ public class ShielderEnemyBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (isAttacking) return;
+        if (isAttacking || isDead) return;
         if (!isChasing)
         {
             Patrol();
@@ -54,8 +54,6 @@ public class ShielderEnemyBehaviour : MonoBehaviour
         {
             ChasePlayer();
         }
-        
-        
     }
 
     private void LateUpdate()
@@ -67,13 +65,9 @@ public class ShielderEnemyBehaviour : MonoBehaviour
     {
         if (isMovingRight)
         {
-            print("right");
             rb.velocity = new Vector2(patrolSpeed, rb.velocity.y);
-
-            print($"{transform.position.x} > {patrolBoundaryRight}");
             if (transform.position.x > patrolBoundaryRight)
             {
-                print("flip");
                 Flip();
             }
         }
@@ -117,7 +111,7 @@ public class ShielderEnemyBehaviour : MonoBehaviour
 
     public void AttackPlayer()
     {
-        if(isAttacking) return;
+        if(isAttacking || isDead) return;
         
         attackTrigger.SetActive(false);
         isAttacking = true;
