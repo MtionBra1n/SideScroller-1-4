@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region Private Variables
-
+    
+    private Interactable selectedInteractable;
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private Animator anim;
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private int jumpCount;
     private int rollCount;
     
-    private Interactable selectedInteractable;
+
     
     #region Input Variables
     
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour
         jumpAction = inputActions.Player.Jump;
         rollAction = inputActions.Player.Roll;
         runAction = inputActions.Player.Run;
+        interactAction = inputActions.Player.Interact;
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour
         runAction.performed += Run;
         runAction.canceled += Run;
 
+        interactAction.performed += Interact;
     }
 
     private void FixedUpdate()
@@ -142,7 +145,8 @@ public class PlayerController : MonoBehaviour
         
         runAction.performed -= Run;
         runAction.canceled -= Run;
-
+        
+        interactAction.performed -= Interact;
     }
     #endregion
     
